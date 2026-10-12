@@ -6,7 +6,7 @@ This is an early, single-contributor project. It is not a hosted service, does n
 
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 20.10 or newer
 - For live model runs only: an Anthropic API key and an API model available to your account. API requests can incur charges; check Console pricing and limits before running them.
 
 ## Try it without an API key or network requests
