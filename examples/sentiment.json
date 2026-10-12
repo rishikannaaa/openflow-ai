@@ -1,0 +1,36 @@
+{
+  "name": "Support message sentiment",
+  "system": "Classify the sentiment of the user's message. Reply with exactly one lowercase word: positive, neutral, or negative. Do not add punctuation or explanation.",
+  "cases": [
+    {
+      "id": "positive-thanks",
+      "input": "Thanks for fixing my account so quickly. That was excellent support!",
+      "checks": {
+        "includes": ["positive"],
+        "excludes": ["negative", "neutral"],
+        "maxLength": 12
+      },
+      "dryRunResponse": "positive"
+    },
+    {
+      "id": "neutral-status-question",
+      "input": "Can you tell me when my order will arrive?",
+      "checks": {
+        "includes": ["neutral"],
+        "excludes": ["positive", "negative"],
+        "maxLength": 12
+      },
+      "dryRunResponse": "neutral"
+    },
+    {
+      "id": "negative-delivery",
+      "input": "My package is three days late and nobody has replied to my messages.",
+      "checks": {
+        "includes": ["negative"],
+        "excludes": ["positive", "neutral"],
+        "maxLength": 12
+      },
+      "dryRunResponse": "negative"
+    }
+  ]
+}

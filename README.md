@@ -1,52 +1,77 @@
-# OpenFlow AI landing-page demo
+# OpenFlow AI
 
-This repository is a static HTML/CSS landing-page concept for a possible AI developer-tool project. It does not currently include an AI product, backend, workflow engine, or the features described as examples on the page. Update the copy to match real functionality before presenting it as a live product.
+OpenFlow AI is a local-first command-line tool for checking Claude prompt behavior against repeatable test cases. Define a system prompt, example inputs, and simple assertions in JSON, then run the suite in fixture-only mode or against Anthropic's API.
 
-## Preview locally
+This is an early, single-contributor project. It is not a hosted service, does not include a backend, and does not claim to be eligible for any startup program or credits. The repository is public but currently has no license, so don't treat it as open-source software with reuse rights until a license is chosen and added.
 
-Open `index.html` in a browser, or run a local server from this directory:
+## Requirements
 
-```powershell
-npx --yes serve .
-```
+- Node.js 20 or newer
+- For live model runs only: an Anthropic API key and an API model available to your account. API requests can incur charges; check Console pricing and limits before running them.
 
-## Publish to GitHub
-
-Create a **public** repository named `openflow-ai` under [rishikannaaa](https://github.com/rishikannaaa), without initializing it with a README, license, or `.gitignore`. Then, from this project directory, run:
+## Try it without an API key or network requests
 
 ```powershell
-git init -b main
-git add .
-git commit -m "Create OpenFlow AI landing page demo"
-git remote add origin https://github.com/rishikannaaa/openflow-ai.git
-git push -u origin main
+npm test
+npm start -- run --file examples/sentiment.json --dry-run
 ```
 
-Git may ask you to sign in through your configured credential manager.
+Dry-run responses are fixtures in the example file. This checks the test runner and assertions; it does **not** call Claude or measure real model output.
 
-## Deploy with GitHub Pages
+## Run against Claude
 
-The workflow in `.github/workflows/deploy.yml` publishes the static site after each push to `main`.
+1. Create an API key through your Anthropic Console account. Do not share it or commit it to GitHub.
+2. Copy `.env.example` to `.env` and put your key in the `ANTHROPIC_API_KEY` value. `.env` is ignored by Git. You can instead set `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` in your terminal environment.
+3. Use a model ID available to your account:
 
-1. Open the repository's **Settings → Pages**.
-2. Under **Build and deployment**, set the source to **GitHub Actions**.
-3. Open **Actions** and wait for the `Deploy to GitHub Pages` workflow to finish.
-4. The site URL will be `https://rishikannaaa.github.io/openflow-ai/`.
+```powershell
+npm start -- run --file examples/sentiment.json --model YOUR_MODEL_ID
+```
 
-## Custom domain (optional)
+The CLI calls the Anthropic Messages API once for each case, sequentially. It prints the response and assertion results; the command exits non-zero when one or more assertions fail. Live calls use your API account and may incur costs. Never put an API key in a command-line argument.
 
-First make sure the GitHub Pages URL works. Then configure a domain you own in **Settings → Pages → Custom domain**, and follow GitHub's current DNS instructions for your registrar. Do not publish an email address or claim domain ownership until it is actually configured and working.
+For machine-readable output:
 
-## Before sharing
+```powershell
+npm start -- run --file examples/sentiment.json --model YOUR_MODEL_ID --json
+```
 
-- Replace example text with accurate project details.
-- Remove or qualify claims that are not supported by working code.
-- Replace the GitHub username placeholders.
-- Add a license only after choosing the terms under which you want others to use the code. This repository currently has no license.
-- Do not imply that this demo qualifies for a grant, startup program, or API credits; eligibility and benefits are determined by the relevant provider.
+## Write a test suite
 
-## Repository contents
+Each suite is a JSON file with a name, a shared system prompt, and 1–50 test cases. Each case must have a unique `id`, an `input`, and at least one check.
 
-- `index.html` — landing page markup
-- `styles.css` — responsive visual styling
-- `.github/workflows/deploy.yml` — GitHub Pages deployment workflow
+Supported checks are case-insensitive `includes` and `excludes` string arrays, and `minLength` / `maxLength` response character counts. Optional `dryRunResponse` values provide local fixtures only; live mode ignores them.
+
+```json
+{
+  "name": "Greeting behavior",
+  "system": "Reply with a short, friendly greeting.",
+  "cases": [
+    {
+      "id": "greet",
+      "input": "Say hello.",
+      "checks": {
+        "includes": ["hello"],
+        "maxLength": 100
+      },
+      "dryRunResponse": "Hello! How can I help?"
+    }
+  ]
+}
+```
+
+## Deploy the project page
+
+The public repo's GitHub Actions workflow deploys the static project information page on each push to `main`. The site is documentation and marketing material; the CLI and live API testing run locally, not in the browser.
+
+- Repository: [github.com/rishikannaaa/openflow-ai](https://github.com/rishikannaaa/openflow-ai)
+- Project page: [rishikannaaa.github.io/openflow-ai](https://rishikannaaa.github.io/openflow-ai/)
+
+## Roadmap
+
+- Markdown and JSON report export
+- More assertion types and prompt variables
+- Run history and side-by-side model comparisons
+- Better cost and token summaries
+
+Bug reports and focused feature requests are welcome. Please describe issues or needs that you have personally encountered.

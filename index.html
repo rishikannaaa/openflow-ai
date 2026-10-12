@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OpenFlow AI — Landing Page Demo</title>
+    <title>OpenFlow AI — Local Prompt Testbench</title>
     <meta
       name="description"
-      content="A responsive concept landing page for an AI developer-tool project. Product features shown are illustrative and are not implemented."
+      content="OpenFlow AI is a local-first CLI for testing Claude prompt behavior against repeatable cases."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,15 +19,15 @@
   <body>
     <header class="site-header">
       <nav class="container nav">
-        <div class="brand">
+        <a class="brand" href="#">
           <span class="brand-mark">O</span>
           <span>OpenFlow AI</span>
-        </div>
+        </a>
         <div class="nav-links">
           <a href="#features">Features</a>
-          <a href="#why-it-matters">Why it matters</a>
+          <a href="#quickstart">Quickstart</a>
           <a href="#repo">GitHub</a>
-          <a href="#contact" class="button button-small">Contact</a>
+          <a href="#quickstart" class="button button-small">Try it locally</a>
         </div>
       </nav>
     </header>
@@ -35,21 +35,21 @@
     <main>
       <section class="hero container">
         <div class="hero-copy">
-          <span class="pill">Concept landing page · static demo</span>
-          <h1>A clearer way to build AI workflows.</h1>
+          <span class="pill">Open-source · local-first · Node.js</span>
+          <h1>Know when your prompt stops doing its job.</h1>
           <p>
-            OpenFlow AI is a concept for developer tooling around AI workflows.
-            This repository currently contains a static landing-page demo, not
-            an implemented AI platform.
+            OpenFlow AI runs saved prompt cases against Claude and checks the
+            responses against assertions you define. Catch regressions before
+            they reach your users.
           </p>
           <div class="hero-actions">
-            <a href="#repo" class="button">View GitHub</a>
-            <a href="#features" class="button button-secondary">Explore Features</a>
+            <a href="#quickstart" class="button">Run the free dry-run</a>
+            <a href="https://github.com/rishikannaaa/openflow-ai" class="button button-secondary">View source</a>
           </div>
           <ul class="mini-stats">
-            <li><strong>Static demo</strong><span>HTML and CSS</span></li>
-            <li><strong>Responsive</strong><span>Desktop and mobile layouts</span></li>
-            <li><strong>Easy to deploy</strong><span>GitHub Pages workflow included</span></li>
+            <li><strong>Fixture mode</strong><span>No API key or network needed</span></li>
+            <li><strong>Live Claude tests</strong><span>Use your own Anthropic API key</span></li>
+            <li><strong>Local by default</strong><span>Prompt suites stay on your machine</span></li>
           </ul>
         </div>
         <div class="hero-card">
@@ -59,70 +59,81 @@
             <span class="dot red"></span>
           </div>
           <div class="terminal">
-            <div class="line"><span class="prompt">$</span> git push origin main</div>
-            <div class="line muted">GitHub Actions workflow starts</div>
-            <div class="line"><span class="prompt">$</span> deploy-pages</div>
-            <div class="line success">Static site published</div>
-            <div class="line muted">Demo only · no AI backend included</div>
+            <div class="line"><span class="prompt">$</span> npm start -- run --file examples/sentiment.json --dry-run</div>
+            <div class="line success">PASS positive-thanks</div>
+            <div class="line success">PASS neutral-status-question</div>
+            <div class="line success">PASS negative-delivery</div>
+            <div class="line muted">3 passed, 0 failed · no API calls</div>
           </div>
         </div>
       </section>
 
       <section id="features" class="container section">
         <div class="section-heading">
-          <span class="eyebrow">Features</span>
-          <h2>A starting point for explaining an AI product idea</h2>
+          <span class="eyebrow">What it does today</span>
+          <h2>A small, usable loop for prompt testing</h2>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
             <div class="icon">01</div>
-            <h3>Workflow Templates</h3>
-            <p>
-              Use this section to describe workflow templates your project
-              actually provides.
-            </p>
+            <h3>Save cases as JSON</h3>
+            <p>Keep system prompts, representative inputs, and expectations reviewable in version control.</p>
           </article>
           <article class="feature-card">
             <div class="icon">02</div>
-            <h3>Observability</h3>
-            <p>
-              Describe real monitoring or evaluation features here once they
-              exist.
-            </p>
+            <h3>Assert on outputs</h3>
+            <p>Check for required or forbidden phrases and response-length boundaries.</p>
           </article>
           <article class="feature-card">
             <div class="icon">03</div>
-            <h3>Guardrails</h3>
-            <p>
-              Explain implemented safety controls without overstating their
-              guarantees.
-            </p>
+            <h3>Dry-run for free</h3>
+            <p>Validate suite structure and checks using fixture responses with zero model requests.</p>
           </article>
           <article class="feature-card">
             <div class="icon">04</div>
-            <h3>Cloud Ready</h3>
-            <p>
-              Document supported environments and deployment steps for your
-              actual project.
-            </p>
+            <h3>Run against Claude</h3>
+            <p>Optionally send cases to Anthropic's API using your own key; live usage may cost money.</p>
           </article>
         </div>
       </section>
 
-      <section id="why-it-matters" class="section alt-bg">
+      <section id="quickstart" class="section alt-bg">
         <div class="container two-col">
           <div>
-            <span class="eyebrow">Why it matters</span>
-            <h2>Make your project’s problem and approach easy to understand.</h2>
+            <span class="eyebrow">Quickstart</span>
+            <h2>Try the test runner without signing up or spending credits.</h2>
+          </div>
+          <div>
+            <p>Install Node.js 20+, clone the repository, and run the included tests and sample suite:</p>
+            <div class="hero-card">
+              <div class="terminal">
+                <div class="line"><span class="prompt">$</span> npm test</div>
+                <div class="line"><span class="prompt">$</span> npm start -- run --file examples/sentiment.json --dry-run</div>
+                <div class="line success">No API key · no network · no charges</div>
+              </div>
+            </div>
+            <p>For live tests, create your own Anthropic Console API key, keep it in an ignored `.env` file, and choose an API model available to your account. API usage can incur charges.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container section">
+        <div class="two-col">
+          <div>
+            <span class="eyebrow">Why this exists</span>
+            <h2>Prompt changes deserve repeatable checks.</h2>
           </div>
           <div>
             <p>
-              Replace this example copy with a clear description of the problem
-              you have observed and the people who experience it.
+              A prompt that worked on one example can fail on a different kind
+              of input. Saving representative cases makes expected behavior
+              explicit and lets developers re-check it after edits.
             </p>
             <p>
-              Explain how your project addresses that problem, and link to
-              features, source code, or a working demo that supports the claims.
+              This first version is deliberately modest: text assertions are
+              not a substitute for expert review, and model outputs can vary.
+              It gives developers a repeatable starting point, not a quality or
+              safety guarantee.
             </p>
           </div>
         </div>
@@ -130,30 +141,30 @@
 
       <section id="repo" class="container section repo-section">
         <div class="section-heading narrow">
-          <span class="eyebrow">Open source</span>
-          <h2>Explore the source code</h2>
+          <span class="eyebrow">Project source</span>
+          <h2>Inspect the code and try the sample suite</h2>
         </div>
         <div class="repo-box">
           <div>
             <p class="label">Repository</p>
             <h3>github.com/rishikannaaa/openflow-ai</h3>
           </div>
-          <a href="https://github.com/rishikannaaa/openflow-ai" target="_blank" rel="noreferrer" class="button">Explore Repo</a>
+          <a href="https://github.com/rishikannaaa/openflow-ai" target="_blank" rel="noreferrer" class="button">View on GitHub</a>
         </div>
       </section>
 
-      <section id="contact" class="container section contact-section">
+      <section class="container section contact-section">
         <div class="contact-box">
           <div>
-            <span class="eyebrow">Contact</span>
-            <h2>Questions or feedback?</h2>
+            <span class="eyebrow">Feedback</span>
+            <h2>Found a bug or have a use case?</h2>
           </div>
           <a href="https://github.com/rishikannaaa/openflow-ai/issues" class="button">Open an issue</a>
         </div>
       </section>
     </main>
     <footer class="container section">
-      <p class="label">OpenFlow AI is a concept name. This demo does not implement AI workflows or represent a launched service.</p>
+      <p class="label">Early project · API-key-based live runs can incur charges · No startup-program eligibility is implied.</p>
     </footer>
   </body>
 </html>

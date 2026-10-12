@@ -225,6 +225,7 @@ a { color: inherit; text-decoration: none; }
 .line {
   margin: 8px 0;
   color: #dfeeff;
+  overflow-wrap: anywhere;
 }
 
 .line.muted, .line.success {
